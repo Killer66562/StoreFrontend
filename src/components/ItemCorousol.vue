@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="height: 50vh; overflow: hidden;">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="aspect-ratio: 1/1; overflow: hidden">
         <div class="carousel-inner">
             <template  v-for="image, idx in images" :key="image">
                 <div class="carousel-item active" v-if="idx == 0">
