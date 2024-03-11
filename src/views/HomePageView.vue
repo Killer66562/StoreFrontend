@@ -53,7 +53,7 @@ const items = ref<Item[]>([
         price: 800,
         count: 10
     }
-])
+]);
 </script>
 
 <template>
