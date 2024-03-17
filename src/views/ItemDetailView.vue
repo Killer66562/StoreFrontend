@@ -36,11 +36,11 @@ const sources = ref<string[]>(
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-4">
                 <ItemCorousol :item="item" :images="images"/>
                 <ImgBar :sources="sources" />
             </div>
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-md-8">
                 <h4>{{ item.name }}</h4>
                 <h3 class="text-danger">${{ item.price }}</h3>
             </div>

@@ -13,6 +13,14 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/ItemDetailView.vue')
             }
         ]
+    },
+    {
+        "path": "/register",
+        component: () => import('../views/RegisterPageView.vue')
+    },
+    {
+        "path": "/login",
+        component: () => import('../views/LoginPageView.vue')
     }
 ];
 
