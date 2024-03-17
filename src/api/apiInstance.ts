@@ -1,10 +1,17 @@
 import axios, { AxiosInstance, CreateAxiosDefaults } from "axios"
+import { useUserStore } from "../stores/userStore";
 
 export class ApiInstance {
     protected _instance: AxiosInstance
 
     public constructor(config: CreateAxiosDefaults) {
         this._instance = axios.create(config);
+        this._instance.interceptors.request.use((request) => {
+            const userStore = useUserStore()
+            if (userStore.isLogin)
+                request.headers.Authorization = `Bearer ${userStore.accessToken}`;
+            return request;
+        })
         this._instance.interceptors.response.use((response) => {
             return response.data;
         }, (error) => {

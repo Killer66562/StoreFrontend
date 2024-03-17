@@ -2,7 +2,7 @@
 import { defineProps } from 'vue';
 import type { Item } from '../models';
 defineProps<{
-    item: Item,
+    item: Item | null,
     images: string[]
 }>();
 </script>

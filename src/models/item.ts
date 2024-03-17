@@ -1,7 +1,11 @@
+import { Store } from "./store"
+
+
 export interface Item {
     id: number
     name: string,
     price: number,
     count: number,
-    description?: string
+    introduction?: string
+    store?: Store
 }

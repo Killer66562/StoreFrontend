@@ -21,6 +21,15 @@ const routes: RouteRecordRaw[] = [
     {
         "path": "/login",
         component: () => import('../views/LoginPageView.vue')
+    },
+    {
+        "path": "/user",
+        children: [
+            {
+                "path": "store",
+                component: () => import('../views/UserStorePageView.vue')
+            }
+        ]
     }
 ];
 
