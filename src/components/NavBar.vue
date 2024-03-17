@@ -7,7 +7,6 @@ import NavbarCollapse from './navbar/NavbarCollapse.vue';
 </script>
 
 <template>
-    <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <RouterLink to="/" class="navbar-brand"><h1>商店</h1></RouterLink>
@@ -30,5 +29,4 @@ import NavbarCollapse from './navbar/NavbarCollapse.vue';
                 </NavbarCollapse>
             </div>
         </nav>
-    </div>
 </template>

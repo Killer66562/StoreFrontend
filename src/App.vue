@@ -6,7 +6,6 @@ import NavBar from './components/NavBar.vue'
   <div class="container-fluid" style="background-color: antiquewhite; min-height: 100vh;">
     <div class="container pb-3" style="background-color: bisque; min-height: 100vh;">
       <header>
-        <NavBar />
       </header>
       <main>
         <RouterView />
