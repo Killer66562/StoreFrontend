@@ -32,7 +32,7 @@ const userStore = useUserStore();
                     </li>
                     <li class="nav-item">
                         <RouterLink class="nav-link active text-center" to="/login" v-if="!userStore.isLogin">註冊｜登入</RouterLink>
-                        <a href="#" class="nav-link active text-center" v-else @click="userStore.logout">登出</a>
+                        <RouterLink to="/" class="nav-link active text-center" v-else @click="userStore.logout">登出</RouterLink>
                     </li>
                 </ul>
             </div>
