@@ -7,7 +7,7 @@ import SearchBar from "./components/SearchBar.vue";
   <Navbar />
   <SearchBar />
   <div class="container-fluid" style="background-color: antiquewhite; min-height: 100vh;">
-    <div class="container pt-3 pb-3" style="background-color: bisque; min-height: 100vh;">
+    <div class="container pt-3 pb-3" style="min-height: 100vh;">
       <header></header>
       <main>
         <RouterView />
