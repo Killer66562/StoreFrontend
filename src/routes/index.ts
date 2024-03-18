@@ -34,6 +34,19 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/UserCreateStoreView.vue')
             }
         ]
+    },
+    {
+        path: "/admin",
+        children: [
+            {
+                path: "cities",
+                component: () => import('../views/AdminCityPage.vue')
+            },
+            {
+                path: "districts",
+                component: () => import('../views/AdminDistrictPage.vue')
+            }
+        ]
     }
 ];
 

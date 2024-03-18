@@ -8,8 +8,7 @@ const items = ref<Item[]>([
         id: 1,
         name: "測試商品1",
         price: 100,
-        count: 10,
-        description: "啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦"
+        count: 10
     },
     {
         id: 2,
