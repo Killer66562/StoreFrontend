@@ -1,3 +1,4 @@
 export interface CreateCity {
-    name: string
+    name: string,
+    city_id: number | null
 }
