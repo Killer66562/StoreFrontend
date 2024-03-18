@@ -4,6 +4,7 @@ import { ApiInstance, jsonConfig } from '../api';
 import { Register } from '../models/register';
 import { ref } from 'vue';
 import { useLoading } from 'vue-loading-overlay';
+import ForceCenter from '../components/ForceCenter.vue';
 const formContainer = ref();
 const loading = useLoading();
 const apiInstance = new ApiInstance(jsonConfig);
@@ -36,30 +37,24 @@ const sendData = async () => {
         <div class="text-center mb-3">已有帳號？<RouterLink to="/login">登入</RouterLink></div>
         <form class="vl-parent" ref="formContainer" @submit.prevent="sendData">
             <loading v-model:active="loading" is-full-page />
-            <div class="row">
-                <div class="col-12 col-md-3"></div>
+            <ForceCenter>
                 <div class="col-12 col-md-6 mb-3">
                     <label for="username-input" class="form-label">使用者名稱</label>
                     <input id="username-input" class="form-control" type="text" maxlength="20" v-model="data.username">
                 </div>
-                <div class="col-12 col-md-3"></div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-3"></div>
+            </ForceCenter>
+            <ForceCenter>
                 <div class="col-12 col-md-6 mb-3">
-                    <label for="username-input" class="form-label">電子郵件</label>
-                    <input id="username-input" class="form-control" type="email" maxlength="100" v-model="data.email">
+                    <label for="email-input" class="form-label">電子郵件</label>
+                    <input id="email-input" class="form-control" type="email" maxlength="100" v-model="data.email">
                 </div>
-                <div class="col-12 col-md-3"></div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-3"></div>
+            </ForceCenter>
+            <ForceCenter>
                 <div class="col-12 col-md-6 mb-3">
-                    <label for="username-input" class="form-label">密碼</label>
-                    <input id="username-input" class="form-control" type="password" maxlength="100" v-model="data.password">
+                    <label for="password-input" class="form-label">密碼</label>
+                    <input id="password-input" class="form-control" type="password" maxlength="100" v-model="data.password">
                 </div>
-                <div class="col-12 col-md-3"></div>
-            </div>
+            </ForceCenter>
             <div class="d-flex flex-row justify-content-center">
                 <button type="submit" class="btn btn-success">點我立即註冊</button>
             </div>
