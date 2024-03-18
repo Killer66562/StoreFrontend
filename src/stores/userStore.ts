@@ -5,6 +5,7 @@ import { ApiInstance, jsonConfig } from "../api";
 import type { TokenData } from "../models/token";
 import type { Login } from "../models/login";
 import { router } from "../routes";
+import { useToast } from "vue-toast-notification";
 
 export const useUserStore = defineStore("userStore", () => {
     const accessToken = useLocalStorage<string | null>("access_token", null, {listenToStorageChanges: true});
@@ -17,7 +18,7 @@ export const useUserStore = defineStore("userStore", () => {
         return accessToken.value !== null && refreshToken.value !== null;
     })
     const login = async () => {
-        console.log("test");
+        const toast = useToast();
         const apiInstance = new ApiInstance(jsonConfig);
         const tokenData: TokenData = await apiInstance.post<TokenData, Login>("/login", loginData.value);
         loginData.value = {
@@ -27,6 +28,7 @@ export const useUserStore = defineStore("userStore", () => {
         accessToken.value = tokenData.access_token;
         refreshToken.value = tokenData.refresh_token;
         await router.replace("/");
+        toast.success("登入成功");
     }
     const logout = () => {
         accessToken.value = null;

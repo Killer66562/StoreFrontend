@@ -4,9 +4,11 @@ import { ApiInstance, jsonConfig } from '../api';
 import { Register } from '../models/register';
 import { ref } from 'vue';
 import { useLoading } from 'vue-loading-overlay';
+import { useToast } from 'vue-toast-notification'
 import ForceCenter from '../components/ForceCenter.vue';
 const formContainer = ref();
 const loading = useLoading();
+const toast = useToast();
 const apiInstance = new ApiInstance(jsonConfig);
 const data = ref<Register>({
     username: "",
@@ -22,12 +24,17 @@ const sendData = async () => {
     });
     try {
         await apiInstance.post("/register", data.value);
+        toast.success("註冊成功");
         await router.replace("/login");
+        toast.success("已將您重新導向至登入頁面");
     }
     catch (err) {
-
+        throw (err);
     }
-    loader.hide();
+    finally {
+        loader.hide();
+    }
+
 }
 </script>
 

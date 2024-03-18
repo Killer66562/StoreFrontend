@@ -15,7 +15,10 @@ export class ApiInstance {
         this._instance.interceptors.response.use((response) => {
             return response.data;
         }, (error: AxiosError) => {
-            return Promise.reject({status: error.response?.status, data: error.response?.data});
+            if (error.message == "Network Error")
+                return Promise.reject("網路錯誤，請檢查網路連線。")
+            else
+                return Promise.reject({status: error.response?.status, data: error.response?.data});
         });
     }
 
