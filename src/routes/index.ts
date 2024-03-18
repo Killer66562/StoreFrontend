@@ -15,19 +15,23 @@ const routes: RouteRecordRaw[] = [
         ]
     },
     {
-        "path": "/register",
+        path: "/register",
         component: () => import('../views/RegisterPageView.vue')
     },
     {
-        "path": "/login",
+        path: "/login",
         component: () => import('../views/LoginPageView.vue')
     },
     {
-        "path": "/user",
+        path: "/user",
         children: [
             {
-                "path": "store",
+                path: "store",
                 component: () => import('../views/UserStorePageView.vue')
+            },
+            {
+                path: "create-store",
+                component: () => import('../views/UserCreateStoreView.vue')
             }
         ]
     }

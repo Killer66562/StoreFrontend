@@ -11,6 +11,7 @@ const page = ref<number>(1);
 const scrollElement = ref<HTMLElement | null>(null);
 const data = ref<Item[]>([]);
 const apiInstance = new ApiInstance(jsonConfig);
+const haveStore = ref<boolean>(true);
 const fetchData = async () => {
     loading.value = true;
     try {
@@ -21,7 +22,10 @@ const fetchData = async () => {
         else
             ++page.value;
     }
-    catch (err) {
+    catch (err: any) {
+        console.error(err.status);
+        if (err.status == 400)
+            haveStore.value = false;
         error.value = true;
     }
     loading.value = false;
@@ -35,7 +39,7 @@ fetchData();
 </script>
 
 <template>
-    <div class="container">
+    <div class="container" v-if="haveStore">
         <div ref="scrollElement" class="overflow-scroll row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6">
             <div class="col mb-3" v-for="item in data" :key="item.id">
                 <ItemCard :item="item" />
@@ -45,5 +49,9 @@ fetchData();
         <div class="d-flex flex-row justify-content-center" v-else-if="!stop">
             <img height="48" src="../assets/loading.gif" alt="讀取中。。。">
         </div>
+    </div>
+    <div class="container" v-else>
+        <h3 class="text-center">你還沒有創建商店喔</h3>
+        <RouterLink to="/user/create-store"><h4 class="text-center">點我創建</h4></RouterLink>
     </div>
 </template>

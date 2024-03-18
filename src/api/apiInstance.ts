@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, CreateAxiosDefaults } from "axios"
+import axios, { AxiosError, AxiosInstance, CreateAxiosDefaults } from "axios"
 import { useUserStore } from "../stores/userStore";
 
 export class ApiInstance {
@@ -14,8 +14,8 @@ export class ApiInstance {
         })
         this._instance.interceptors.response.use((response) => {
             return response.data;
-        }, (error) => {
-            return Promise.reject(error);
+        }, (error: AxiosError) => {
+            return Promise.reject({status: error.response?.status, data: error.response?.data});
         });
     }
 
