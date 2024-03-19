@@ -32,6 +32,10 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "create-store",
                 component: () => import('../views/UserCreateStoreView.vue')
+            },
+            {
+                path: "cart-items",
+                component: () => import('../views/UserCartItemsView.vue')
             }
         ]
     },
