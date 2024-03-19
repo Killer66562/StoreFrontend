@@ -22,6 +22,6 @@ app.config.errorHandler = ((err: any) => {
         toast.error(err.data.message, {position: "top-right"});
     else
         toast.error(err, {position: "top-right"});
-})
+});
 
 app.mount('#app');

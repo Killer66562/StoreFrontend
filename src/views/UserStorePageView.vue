@@ -4,6 +4,9 @@ import { ApiInstance, jsonConfig } from '../api';
 import { Item, Page } from '../models';
 import ItemCard from '../components/ItemCard.vue';
 import { useEventListener } from '@vueuse/core';
+import { Store } from '../models/store';
+import StoreInfo from '../components/StoreInfo.vue';
+const store = ref<Store>();
 const stop = ref<boolean>(false);
 const loading = ref<boolean>(true);
 const error = ref<boolean>(false);
@@ -12,6 +15,9 @@ const scrollElement = ref<HTMLElement | null>(null);
 const data = ref<Item[]>([]);
 const apiInstance = new ApiInstance(jsonConfig);
 const haveStore = ref<boolean>(true);
+const fetchStore = async () => {
+    store.value = await apiInstance.get<Store>("/user/store", {page: page.value, size: 60});
+}
 const fetchData = async () => {
     loading.value = true;
     try {
@@ -35,12 +41,15 @@ useEventListener(window, 'scroll', async () => {
     if (bottomOfWindow && stop.value === false && loading.value === false)
         await fetchData();
 });
+fetchStore();
 fetchData();
 </script>
 
 <template>
+    <StoreInfo :store="store" :from-item-page="false"/>
     <div class="container" v-if="haveStore">
-        <div ref="scrollElement" class="overflow-scroll row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6">
+        <h3 class="text-center" v-if="data.length == 0">商店空空如也</h3>
+        <div ref="scrollElement" v-else class="overflow-scroll row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6">
             <div class="col mb-3" v-for="item in data" :key="item.id">
                 <ItemCard :item="item" />
             </div>

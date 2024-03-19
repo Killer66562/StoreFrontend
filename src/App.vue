@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Navbar from "./components/NavBar.vue";
 import SearchBar from "./components/SearchBar.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
@@ -13,7 +14,16 @@ import SearchBar from "./components/SearchBar.vue";
       <div class="container pt-3">
         <header></header>
         <main>
-          <RouterView />
+          <RouterView v-slot="{Component}">
+            <template v-if="Component">
+              <Suspense>
+                <component :is="Component" />
+                <template #fallback>
+                  載入中
+                </template>
+              </Suspense>
+            </template>
+          </RouterView>
         </main>
         <footer></footer>
       </div>

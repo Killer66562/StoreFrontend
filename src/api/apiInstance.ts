@@ -16,7 +16,7 @@ export class ApiInstance {
             return response.data;
         }, (error: AxiosError) => {
             if (error.message == "Network Error")
-                return Promise.reject("網路錯誤，請檢查網路連線。")
+                return Promise.reject("網路錯誤，請檢查網路連線。");
             else
                 return Promise.reject({status: error.response?.status, data: error.response?.data});
         });
