@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, CreateAxiosDefaults } from "axios"
 import { useUserStore } from "../stores/userStore";
 import { useToast } from "vue-toast-notification";
+import { router } from "../routes";
 
 export class ApiInstance {
     protected _instance: AxiosInstance
@@ -25,12 +26,26 @@ export class ApiInstance {
                     this._toast.error("伺服器錯誤。");
                     return Promise.reject("伺服器錯誤。");
                 }
+                else if (error.response?.status as number == 429) {
+                    this._toast.error("你已被限速。");
+                    return Promise.reject("你已被限速。");
+                }
                 else if (error.response?.status as number == 422) {
                     
                 }
                 else if (error.response?.status as number == 405) {
                     this._toast.error("未知的伺服器端點。");
                     return Promise.reject("未知的伺服器端點。");
+                }
+                else if (error.response?.status as number == 401) {
+                    if (router.currentRoute.value.path != "/login") {
+                        this._toast.error("驗證失敗，請重新登入。");
+                        return Promise.reject("驗證失敗，請重新登入。");
+                    }
+                    else {
+                        this._toast.error("使用者名稱或密碼錯誤。");
+                        return Promise.reject("使用者名稱或密碼錯誤。");
+                    }
                 }
                 else if (error.response?.status as number >= 400) {
                     const responseData = error.response?.data as any;

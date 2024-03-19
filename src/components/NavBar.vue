@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { useUserStore } from '../stores/userStore';
 const userStore = useUserStore();
+const { userData } = storeToRefs(userStore);
+userStore.fetchUserData();
 </script>
 
 
@@ -30,6 +33,7 @@ const userStore = useUserStore();
                             <img class="nav-brand" src="../assets/store.png" alt="我的商店" height="24" width="24">
                         </RouterLink>
                     </li>
+                    <li class="nav-item nav-link active" v-if="userData">您好，{{ userData?.username }}！</li>
                     <li class="nav-item">
                         <RouterLink class="nav-link active text-center" to="/login" v-if="!userStore.isLogin">註冊｜登入</RouterLink>
                         <RouterLink to="/" class="nav-link active text-center" v-else @click="userStore.logout">登出</RouterLink>
