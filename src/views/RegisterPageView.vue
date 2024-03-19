@@ -1,32 +1,21 @@
 <script setup lang="ts">
-import { router } from '../routes';
-import { ApiInstance, jsonConfig } from '../api';
-import { Register } from '../models/register';
 import { ref } from 'vue';
 import { useLoading } from 'vue-loading-overlay';
-import { useToast } from 'vue-toast-notification'
 import ForceCenter from '../components/ForceCenter.vue';
+import { useRegisterStore } from '../stores/registerStore';
+import { storeToRefs } from 'pinia';
+const registerStore = useRegisterStore();
+const { data } = storeToRefs(registerStore);
 const formContainer = ref();
-const loading = useLoading();
-const toast = useToast();
-const apiInstance = new ApiInstance(jsonConfig);
-const data = ref<Register>({
-    username: "",
-    email: "",
-    password: ""
+const loading = useLoading({
+    color: 'blue',
+    isFullPage: true,
+    opacity: 0
 });
 const sendData = async () => {
-    let loader = loading.show({
-        color: 'blue',
-        container: formContainer.value,
-        isFullPage: false,
-        opacity: 0
-    });
+    const loader = loading.show();
     try {
-        await apiInstance.post("/register", data.value);
-        toast.success("註冊成功");
-        await router.replace("/login");
-        toast.success("已將您重新導向至登入頁面");
+        await registerStore.sendData();
     }
     catch (err) {
         throw (err);
@@ -42,7 +31,7 @@ const sendData = async () => {
     <div class="container">
         <h2 class="text-center">註冊</h2>
         <div class="text-center mb-3">已有帳號？<RouterLink to="/login">登入</RouterLink></div>
-        <form class="vl-parent" ref="formContainer" @submit.prevent="sendData">
+        <form class="vl-element" ref="formContainer" @submit.prevent="sendData">
             <loading v-model:active="loading" is-full-page />
             <ForceCenter>
                 <div class="col-12 col-md-6 mb-3">

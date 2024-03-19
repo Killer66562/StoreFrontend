@@ -56,7 +56,9 @@ const routes: RouteRecordRaw[] = [
 
 const options: RouterOptions = {
     history: createWebHashHistory(),
-    routes: routes
+    routes: routes,
 }
 
-export const router = createRouter(options);
+const _router = createRouter(options);
+
+export const router = _router;
