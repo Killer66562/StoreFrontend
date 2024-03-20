@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { CreateStore } from '../models/createStore';
 import { ApiInstance, jsonConfig } from '../api';
 import { router } from '../routes';
+import LoginCheck from '../components/LoginCheck.vue';
 const apiInstance = new ApiInstance(jsonConfig);
 const error = ref<string>("");
 const data = ref<CreateStore>({
@@ -12,7 +13,7 @@ const data = ref<CreateStore>({
 });
 const canSend = computed(() => {
     return data.value.name.length > 0 && data.value.introduction.length > 0 && data.value.district_id !== null;
-})
+});
 const sendData = async () => {
     try {
         await apiInstance.post("/user/store", data.value);
@@ -28,7 +29,7 @@ const sendData = async () => {
 </script>
 
 <template>
-    <div class="container">
+    <LoginCheck>
         <h2 class="text-center">創建商店</h2>
         <form @submit.prevent="sendData">
             <div class="row">
@@ -71,5 +72,5 @@ const sendData = async () => {
             </div>
         </form>
         <p class="text-center" v-if="error">錯誤：{{ error }}</p>
-    </div>
+    </LoginCheck>
 </template>

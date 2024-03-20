@@ -6,6 +6,7 @@ import { router } from "../routes";
 export class ApiInstance {
     protected _instance: AxiosInstance
     protected _toast = useToast({position: "bottom", dismissible: true, duration: 2000});
+    protected _userStore = useUserStore();
     public constructor(config: CreateAxiosDefaults) {
         this._instance = axios.create(config);
         this._instance.interceptors.request.use((request) => {
@@ -39,13 +40,17 @@ export class ApiInstance {
                 }
                 else if (error.response?.status as number == 401) {
                     if (router.currentRoute.value.path != "/login") {
-                        this._toast.error("驗證失敗，請重新登入。");
-                        return Promise.reject("驗證失敗，請重新登入。");
+                        if (this._userStore.isLogin) {
+                            this._toast.error("驗證失敗，請重新登入。");
+                            return Promise.reject("驗證失敗，請重新登入。");
+                        }
+                        else {
+                            this._toast.error("請先登入。");
+                            return Promise.reject("請先登入。");
+                        }
                     }
-                    else {
-                        this._toast.error("使用者名稱或密碼錯誤。");
+                    else
                         return Promise.reject("使用者名稱或密碼錯誤。");
-                    }
                 }
                 else if (error.response?.status as number >= 400) {
                     const responseData = error.response?.data as any;

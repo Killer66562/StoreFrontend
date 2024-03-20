@@ -9,7 +9,7 @@ defineProps<{
 
 
 <template>
-    <div class="row mb-3">
+    <div class="row mb-3" v-if="store">
         <div class="col-3 col-md-1">
             <RouterLink :to="`/stores/${store?.id}`" v-if="fromItemPage === true">
                 <img class="img-fluid rounded-circle" src="../assets/store.png" style="aspect-ratio: 1 / 1;">

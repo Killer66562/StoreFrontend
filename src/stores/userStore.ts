@@ -7,6 +7,7 @@ import { router } from "../routes";
 import { useJsonGeneral } from "../composibles";
 import { useRootStore } from "./rootStore";
 import { User } from "../models/user";
+import { useLoading } from "vue-loading-overlay";
 
 export const useUserStore = defineStore("userStore", () => {
     const rootStore = useRootStore();
@@ -29,13 +30,27 @@ export const useUserStore = defineStore("userStore", () => {
         };
     }
     const login = async () => {
-        const tokenData: TokenData = await apiInstance.post<TokenData, Login>("/login", loginData.value);
-        accessToken.value = tokenData.access_token;
-        refreshToken.value = tokenData.refresh_token;
-        await router.replace("/");
-        clearData();
-        await fetchUserData();
-        toast.success("登入成功");
+        const loading = useLoading({
+            isFullPage: false,
+            opacity: 0
+        });
+        const loader = loading.show();
+        try {
+            const tokenData: TokenData = await apiInstance.post<TokenData, Login>("/login", loginData.value);
+            accessToken.value = tokenData.access_token;
+            refreshToken.value = tokenData.refresh_token;
+            await fetchUserData();
+            await router.replace("/");
+            clearData();
+            toast.success("登入成功");
+        }
+        catch (err) {
+            toast.error("使用者名稱或密碼錯誤。");
+            throw err;
+        }
+        finally {
+            loader.hide();
+        }
     }
     const logout = async () => {
         accessToken.value = null;
