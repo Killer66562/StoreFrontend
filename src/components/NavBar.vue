@@ -18,21 +18,24 @@ userStore.fetchUserData();
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <li class="nav-item">
-                        <RouterLink to="/user/cart-items" class="nav-link active text-center">
-                            <img class="nav-brand" src="../assets/cart.png" alt="購物車" height="24" width="24">
-                        </RouterLink>
-                    </li>
-                    <li class="nav-item">
-                        <RouterLink to="/user/records" class="nav-link active text-center">
-                            <img class="nav-brand" src="../assets/record.png" alt="訂單一覽" height="24" width="24">
-                        </RouterLink>
-                    </li>
-                    <li class="nav-item">
-                        <RouterLink to="/user/store" class="nav-link active text-center">
-                            <img class="nav-brand" src="../assets/store.png" alt="我的商店" height="24" width="24">
-                        </RouterLink>
-                    </li>
+                    <template v-if="userData">
+                        <li class="nav-item">
+                            <RouterLink to="/user/cart-items" class="nav-link active text-center">
+                                <img class="nav-brand" src="../assets/cart.png" alt="購物車" height="24" width="24">
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink to="/user/records" class="nav-link active text-center">
+                                <img class="nav-brand" src="../assets/record.png" alt="訂單一覽" height="24" width="24">
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink to="/user/store" class="nav-link active text-center">
+                                <img class="nav-brand" src="../assets/store.png" alt="我的商店" height="24" width="24">
+                            </RouterLink>
+                        </li>
+                    </template>
+                    <li class="nav-item nav-link" v-else>登入以使用使用者相關功能</li>
                     <li class="nav-item nav-link active" v-if="userData">您好，{{ userData?.username }}！</li>
                     <li class="nav-item">
                         <RouterLink class="nav-link active text-center" to="/login" v-if="!userStore.isLogin">註冊｜登入</RouterLink>

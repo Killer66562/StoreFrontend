@@ -10,6 +10,7 @@ import { User } from "../models/user";
 import { useLoading } from "vue-loading-overlay";
 
 export const useUserStore = defineStore("userStore", () => {
+    const userDataLoading = ref<boolean>(false);
     const rootStore = useRootStore();
     const { registerStore, cartItemStore, userStoreStore } = storeToRefs(rootStore);
     const { apiInstance, toast } = useJsonGeneral();
@@ -65,6 +66,7 @@ export const useUserStore = defineStore("userStore", () => {
         toast.success("登出成功");
     }
     const fetchUserData = async () => {
+        userDataLoading.value = true;
         if (isLogin.value === true) {
             try {
                 userData.value = await apiInstance.get("/user", {});
@@ -75,6 +77,7 @@ export const useUserStore = defineStore("userStore", () => {
             }
             finally {
                 clearData();
+                userDataLoading.value = false;
             }
         }
     }
@@ -86,6 +89,7 @@ export const useUserStore = defineStore("userStore", () => {
         userData,
         login,
         logout,
-        fetchUserData
+        fetchUserData,
+        userDataLoading
     }
 })

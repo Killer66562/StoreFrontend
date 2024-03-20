@@ -5,7 +5,8 @@ export const jsonConfig: CreateAxiosDefaults = {
     timeout: 10000,
     headers: {
         "Content-Type": "application/json"
-    }
+    },
+    withCredentials: true
 }
 
 export const multipartConfig: CreateAxiosDefaults = {
@@ -13,5 +14,6 @@ export const multipartConfig: CreateAxiosDefaults = {
     timeout: 10000,
     headers: {
         "Content-Type": "multipart/formdata"
-    }
+    },
+    withCredentials: true
 }
