@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import type { Item } from '../models';
+import { getStaticFile } from '../funcs';
 defineProps<{
-    item?: Item,
-    images: string[]
+    item?: Item
 }>();
 </script>
 
 <template>
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="aspect-ratio: 1/1; overflow: hidden">
         <div class="carousel-inner">
-            <template  v-for="image, idx in images" :key="image">
+            <template  v-for="image, idx in item?.images" :key="image">
                 <div class="carousel-item active" v-if="idx == 0">
-                    <img :src="image" class="d-block w-100" alt="Item">
+                    <img :src="getStaticFile(image.path)" class="d-block w-100" alt="Item">
                 </div>
                 <div class="carousel-item" v-else>
-                    <img :src="image" class="d-block w-100" alt="Item">
+                    <img :src="getStaticFile(image.path)" class="d-block w-100" alt="Item">
                 </div>
             </template>
         </div>

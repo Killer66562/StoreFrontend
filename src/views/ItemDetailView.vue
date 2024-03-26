@@ -14,26 +14,6 @@ const loading = useLoading({
     opacity: 0
 });
 const itemDetailStore = useItemDetailStore();
-const images = ref<string[]>(
-    [
-        './src/assets/item.jpg', 
-        './src/assets/ad.jpeg'
-    ]
-);
-const sources = ref<string[]>(
-    [
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg',
-        './src/assets/item.jpg'
-    ]
-);
 const data = ref<CreateCartItem>({
     item_id: itemDetailStore.item?.id as number,
     count: 1
@@ -59,8 +39,8 @@ fetchData();
     <div class="container" v-if="isReady === true">
         <div class="row">
             <div class="col-12 col-md-4">
-                <ItemCorousol :item="itemDetailStore.item" :images="images"/>
-                <ImgBar :sources="sources" />
+                <ItemCorousol :item="itemDetailStore.item" class="mb-3"/>
+                <ImgBar :images="itemDetailStore.item?.images" />
             </div>
             <div class="col-12 col-md-8">
                 <h4>{{ itemDetailStore.item?.name }}</h4>

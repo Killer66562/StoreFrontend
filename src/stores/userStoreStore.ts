@@ -21,6 +21,7 @@ export const useUserStoreStore = defineStore("userStoreStore", () => {
     const fetchItems = async () => {
         try {
             const fetched = await apiInstance.get<Page<Item>>("/user/store/items", {page: page.value, size: 60});
+            storeItems.value = [];
             storeItems.value.push(...fetched.items);
             if (fetched.page >= fetched.pages)
                 stop.value = true;

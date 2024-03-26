@@ -3,7 +3,6 @@ import { useSearchStore } from '../stores/searchStore';
 const searchStore = useSearchStore();
 </script>
 
-
 <template>
     <div class="continaer-fluid bg-warning pb-3">
         <div class="container">
