@@ -2,7 +2,6 @@
 import { ref, watch } from 'vue';
 import { City } from '../models/city';
 import { ApiInstance, jsonConfig } from '../api';
-import { useLoading } from 'vue-loading-overlay';
 import { District } from '../models/district';
 const name = ref<string>("");
 const city_id = ref<number | null>(null);

@@ -59,7 +59,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const options: RouterOptions = {
-    history: createWebHashHistory(),
+    history: createWebHashHistory("/dist/"),
     routes: routes,
 }
 
