@@ -7,18 +7,15 @@ import { router } from "./routes";
 
 <template>
   <div class="pb-3" style="background-color: antiquewhite; min-height: 100vh;">
-    <div class="sticky-top">
+    <header class="sticky-top">
       <Navbar />
       <SearchBar />
-    </div>
+    </header>
     <div class="container-fluid">
-      <div class="container pt-3">
-        <header></header>
-        <main>
-          <RouterView :key="router.currentRoute.value.fullPath"/>
-        </main>
-        <footer></footer>
-      </div>
+      <main class="container pt-3">
+        <RouterView :key="router.currentRoute.value.fullPath"/>
+      </main>
     </div>
+    <footer></footer>
   </div>
 </template>

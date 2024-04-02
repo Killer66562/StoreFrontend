@@ -65,7 +65,7 @@ export class ApiInstance {
         });
     }
 
-    public async get<T>(url: string, params: object): Promise<T> {
+    public async get<T>(url: string, params?: object): Promise<T> {
         return await this._instance.get(url, {params: params});
     };
 

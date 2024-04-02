@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ItemAccordion from '../components/ItemAccordion.vue'
 import ItemCorousol from '../components/ItemCorousol.vue';
+import ItemDetail from '../components/ItemDetail.vue'
 import ImgBar from '../components/ImgBar.vue';
 import { CreateCartItem } from '../models/createCartItem';
 import { useLoading } from 'vue-loading-overlay';
@@ -38,11 +38,11 @@ fetchData();
 <template>
     <div class="container" v-if="isReady === true">
         <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <ItemCorousol :item="itemDetailStore.item" class="mb-3"/>
                 <ImgBar :images="itemDetailStore.item?.images" />
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-9">
                 <h4>{{ itemDetailStore.item?.name }}</h4>
                 <h3 class="text-danger">${{ itemDetailStore.item?.price }}</h3>
                 <form @submit.prevent="">
@@ -55,8 +55,6 @@ fetchData();
             </div>
         </div>
         <StoreInfo :store="itemDetailStore.item?.store" :from-item-page="true" />
-        <div class="row">
-            <ItemAccordion :item="itemDetailStore.item" />
-        </div>
+        <ItemDetail :item="itemDetailStore.item"/>
     </div>
 </template>

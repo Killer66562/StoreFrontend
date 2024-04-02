@@ -1,34 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useCreateItemStore } from '../stores/createItemStore';
 import { useCustomToast } from '../composibles';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+const createItemStore = useCreateItemStore();
+const { data, iconData } = storeToRefs(createItemStore);
 const imageUrl = ref<string | null>("");
 const fileInputRef = ref<HTMLInputElement>();
 const onInputFileChanged = () => {
     const targetFile = fileInputRef.value?.files?.item(0);
-    if (!targetFile)
+    if (targetFile === undefined || targetFile === null) {
         imageUrl.value = null;
+        console.log(targetFile);
+    }
     else if (targetFile.size > 1024 * 1024) {
         const toast = useCustomToast();
         toast.error("檔案過大");
         imageUrl.value = null;
     }
-    else
+    else {
+        iconData.value = targetFile;
         imageUrl.value = URL.createObjectURL(targetFile);
+    }
 }
 </script>
 
 <template>
     <h2 class="text-center">新增商品</h2>
-    <form>
+    <form @submit.prevent="createItemStore.sendData">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="mb-3">
                     <label class="form-label" for="item-name-input">商品名稱</label>
-                    <input class="form-control" type="text" maxlength="100" placeholder="請輸入商品名稱">
+                    <input class="form-control" type="text" maxlength="100" placeholder="請輸入商品名稱" v-model="data.name">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="item-introduction-input">商品介紹</label>
-                    <textarea class="form-control" rows="15" placeholder="請輸入商品介紹"></textarea>
+                    <textarea class="form-control" rows="15" placeholder="請輸入商品介紹" v-model="data.introduction"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="item-introduction-input">商品價格</label>
+                    <input class="form-control" type="number" placeholder="請輸入商品價格" min="0" max="999999" v-model="data.price">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="item-introduction-input">商品數量</label>
+                    <input class="form-control" type="number" placeholder="請輸入商品數量" min="0" max="999999" v-model="data.count">
                 </div>
             </div>
             <div class="col-12 col-md-6">
