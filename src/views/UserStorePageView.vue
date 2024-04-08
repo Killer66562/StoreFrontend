@@ -6,7 +6,7 @@ import StoreInfo from '../components/StoreInfo.vue';
 import { useUserStoreStore } from '../stores/userStoreStore';
 import { storeToRefs } from 'pinia';
 import { useLoading } from 'vue-loading-overlay';
-import LoginCheck from '../components/LoginCheck.vue';
+import LoginCheck from '../components/auth/LoginCheck.vue';
 import { router } from '../routes';
 const userStoreStore = useUserStoreStore();
 const { storeData, storeItems, stop } = storeToRefs(userStoreStore);

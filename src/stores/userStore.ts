@@ -77,9 +77,9 @@ export const useUserStore = defineStore("userStore", () => {
             }
             finally {
                 clearData();
-                userDataLoading.value = false;
             }
         }
+        userDataLoading.value = false;
     }
     return {
         accessToken,
