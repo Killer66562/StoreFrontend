@@ -27,7 +27,7 @@ export const useUserStore = defineStore("userStore", () => {
     const clearData = () => {
         loginData.value = {
             username: "",
-            password: ""
+            password: "",
         };
     }
     const login = async () => {
