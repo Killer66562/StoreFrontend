@@ -1,37 +1,25 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { CreateStore } from '../models/createStore';
-import { ApiInstance, jsonConfig } from '../api';
-import { router } from '../routes';
-import LoginCheck from '../components/LoginCheck.vue';
-const apiInstance = new ApiInstance(jsonConfig);
-const error = ref<string>("");
-const data = ref<CreateStore>({
-    name: "",
-    introduction: "",
-    district_id: null
-});
-const canSend = computed(() => {
-    return data.value.name.length > 0 && data.value.introduction.length > 0 && data.value.district_id !== null;
-});
-const sendData = async () => {
+import { storeToRefs } from 'pinia';
+import { useCreateStoreStore } from '../stores/createStoreStore';
+import { useToast } from 'vue-toast-notification';
+const createStoreStore = useCreateStoreStore();
+const { currentCity, cities, districts, data } = storeToRefs(createStoreStore);
+const initial = async () => {
     try {
-        await apiInstance.post("/user/store", data.value);
-        await router.replace("/user/store");
+        await Promise.all([createStoreStore.fetchCities()]);
     }
-    catch (err: any) {
-        if (err.status == 400 || err.status == 409)
-            error.value = err.data.message;
-        else if (err.status / 100 == 5)
-            error.value = "伺服端錯誤";
+    catch (err) {
+        const toast = useToast();
+        toast.error("發生錯誤", {position: "bottom"});
     }
 }
+initial();
 </script>
 
 <template>
     <LoginCheck>
         <h2 class="text-center">創建商店</h2>
-        <form @submit.prevent="sendData">
+        <form @submit.prevent="createStoreStore.sendData">
             <div class="row">
                 <div class="col-12 col-md-3"></div>
                 <div class="col-12 col-md-6 mb-3">
@@ -52,25 +40,23 @@ const sendData = async () => {
                 <div class="col-12 col-md-3"></div>
                 <div class="col-12 col-md-3 mb-3">
                     <label for="city-select" class="form-label">商店所在縣市</label>
-                    <select id="city-select" class="form-select">
+                    <select id="city-select" class="form-select" v-model="currentCity">
                         <option :value="null" selected>請選擇縣市</option>
-                        <option value="1">台中市</option>
-                        <option value="2">彰化縣</option>
+                        <option v-for="city in cities" :value="city">{{ city.name }}</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-3 mb-3">
                     <label for="city-select" class="form-label">商店所在鄉鎮市區</label>
                     <select id="city-select" class="form-select" v-model="data.district_id">
                         <option :value="null" selected>請選擇鄉鎮市區</option>
-                        <option value="1">彰化市</option>
+                        <option v-for="district in districts" :value="district.id">{{ district.name }}</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-3"></div>
             </div>
             <div class="d-flex flex-row justify-content-center">
-                <button :disabled="!canSend" type="submit" class="btn btn-success">點我創建商店</button>
+                <button type="submit" class="btn btn-success">點我創建商店</button>
             </div>
         </form>
-        <p class="text-center" v-if="error">錯誤：{{ error }}</p>
     </LoginCheck>
 </template>
