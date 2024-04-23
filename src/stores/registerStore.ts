@@ -9,13 +9,15 @@ export const useRegisterStore = defineStore("registerStore", () => {
     const data = ref<Register>({
         username: "",
         email: "",
-        password: ""
+        password: "",
+        birthday: new Date()
     });
     const clearData = () => {
         data.value = {
             username: "",
             email: "",
-            password: ""
+            password: "",
+            birthday: new Date()
         }
     }
     const sendData = async () => {

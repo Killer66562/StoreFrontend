@@ -3,7 +3,9 @@ import { storeToRefs } from 'pinia';
 import { useCartItemStore } from '../stores/cartItemStore';
 import { ref } from 'vue';
 import { useLoading } from 'vue-loading-overlay';
+import { getStaticFile } from '../funcs';
 import LoginCheck from '../components/LoginCheck.vue';
+import { useJsonGeneral } from '../composibles';
 const loadingComposition = useLoading({
     opacity: 0,
     isFullPage: true
@@ -26,6 +28,20 @@ const fetchData = async () => {
         loader.hide();
         loading.value = false;
     }
+}
+const deleteCartItem = async (item_id: number) => {
+    loading.value = true;
+    const loader = loadingComposition.show();
+    const { apiInstance } = useJsonGeneral();
+    try {
+        await apiInstance.delete(`/user/cart_items/${item_id}`);
+    }
+    catch (err) {}
+    finally {
+        loader.hide();
+        loading.value = false;
+    }
+    await fetchData();
 }
 fetchData();
 </script>
@@ -51,14 +67,17 @@ fetchData();
                     <tbody>
                         <tr v-for="cartItem in cartItems" :key="cartItem.id">
                             <td><input type="checkbox" v-model="selectedCartItems" :value="cartItem"></td>
-                            <td><img class="img-fluid" src="../assets/item.jpg" alt="cart-item" style="aspect-ratio: 1 / 1;"></td>
+                            <td >
+                                <img class="img-fluid" :src="getStaticFile(cartItem.item.icon)" alt="cart-item" style="aspect-ratio: 1 / 1;" v-if="cartItem.item.icon">
+                                <img class="img-fluid" src="../assets/item.jpg" alt="cart-item" style="aspect-ratio: 1 / 1;" v-else>
+                            </td>
                             <td></td>
                             <td class="text-wrap">{{ cartItem.item.name }}</td>
                             <td>{{ cartItem.item.price }}</td>
                             <td>{{ cartItem.count }}</td>
                             <td>{{ cartItem.item.price * cartItem.count }}</td>
                             <td>
-                                <button type="button" class="btn btn-danger">刪除</button>
+                                <button type="button" class="btn btn-danger" @click="deleteCartItem(cartItem.id)">刪除</button>
                             </td>
                         </tr>
                     </tbody>

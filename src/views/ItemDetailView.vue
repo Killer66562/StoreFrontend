@@ -3,12 +3,12 @@ import { ref } from 'vue'
 import ItemCorousol from '../components/ItemCorousol.vue';
 import ItemDetail from '../components/ItemDetail.vue'
 import ImgBar from '../components/ImgBar.vue';
-import { CreateCartItem } from '../models/createCartItem';
 import { useLoading } from 'vue-loading-overlay';
 import StoreInfo from '../components/StoreInfo.vue';
 import { useItemDetailStore } from '../stores/itemDetailStore';
 import { ApiInstance, baseConfig } from '../api';
 import { useToast } from 'vue-toast-notification';
+
 const isLoading = ref<boolean>();
 const isReady = ref<boolean>();
 const loading = useLoading({
@@ -16,10 +16,7 @@ const loading = useLoading({
     opacity: 0
 });
 const itemDetailStore = useItemDetailStore();
-const data = ref<CreateCartItem>({
-    item_id: itemDetailStore.item?.id as number,
-    count: 1
-});
+const { item, data } = storeToRefs(itemDetailStore);
 const fetchData = async () => {
     isLoading.value = true;
     isReady.value = false;

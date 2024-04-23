@@ -51,6 +51,12 @@ const sendData = async () => {
                     <input id="password-input" class="form-control" type="password" maxlength="100" v-model="data.password">
                 </div>
             </ForceCenter>
+            <ForceCenter>
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="birthday-input" class="form-label">密碼</label>
+                    <input id="birthday-input" class="form-control" type="date" maxlength="100" v-model="data.birthday">
+                </div>
+            </ForceCenter>
             <div class="d-flex flex-row justify-content-center">
                 <button type="submit" class="btn btn-success">點我立即註冊</button>
             </div>
