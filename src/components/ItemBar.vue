@@ -12,9 +12,7 @@ defineProps<{
     <h4 class="pt-3">{{ title }}</h4>
     <div class="row flex-nowrap overflow-auto mb-3">
         <div class="col-6 col-md-4 col-lg-3 col-xxl-2" v-for="item in items" :key="item.id">
-            <RouterLink :to="`/items/${item.id}`" class="text-decoration-none">
-                <ItemCard :item="item"/>
-            </RouterLink>
+            <ItemCard :item="item"/>
         </div>
     </div>
 </template>

@@ -1,7 +1,9 @@
 import { ApiInstance } from "./apiInstance";
-import { jsonConfig } from "./config";
+import { jsonConfig, multipartConfig, baseConfig } from "./config";
 
 export {
     ApiInstance,
-    jsonConfig
+    jsonConfig,
+    multipartConfig,
+    baseConfig
 };
