@@ -17,3 +17,8 @@ export const multipartConfig: CreateAxiosDefaults = {
     },
     withCredentials: true
 }
+
+export const baseConfig: CreateAxiosDefaults = {
+    baseURL: import.meta.env.VITE_API_URL,
+    timeout: 5000
+}

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { router } from '../routes';
-import { useUserStore } from '../stores/userStore';
-const userStore = useUserStore();
+import { useTokenStore } from '../stores';
+const tokenStore = useTokenStore();
 const redirectCheck = async () => {
-    if (!userStore.isLogin)
+    if (!tokenStore.isLogin)
         await router.replace("/login");
 }
 redirectCheck();
 </script>
 
 <template>
-    <slot v-if="userStore.isLogin"></slot>
+    <slot v-if="tokenStore.isLogin"></slot>
 </template>

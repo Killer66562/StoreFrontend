@@ -1,16 +1,36 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '../stores/userStore';
+import { useLoginStore, useUserStore } from '../stores';
+const loginStore = useLoginStore();
 const userStore = useUserStore();
-const { loginData } = storeToRefs(userStore);
+const { loginData } = storeToRefs(loginStore);
 import ForceCenter from '../components/ForceCenter.vue';
+import { useToast } from 'vue-toast-notification';
+import { router } from '../routes';
+
+const login = async () => {
+    const toast = useToast();
+    try {
+        await loginStore.sendLoginData();
+        try {
+            await userStore.fetchUserData();
+        }
+        catch (err) {
+            toast.error("無法獲取使用者資訊，請稍後重試。");
+        }
+        await router.replace("/");
+    }
+    catch (err) {
+        toast.error("使用者帳號或密碼錯誤");
+    }
+}
 </script>
 
 <template>
     <div class="container">
         <h2 class="text-center">登入</h2>
         <div class="text-center mb-3">尚無帳號？<RouterLink to="/register">註冊</RouterLink></div>
-        <form @submit.prevent="userStore.login">
+        <form @submit.prevent="login">
             <ForceCenter>
                 <div class="col-12 col-md-6 mb-3">
                     <label for="username-input" class="form-label">使用者名稱</label>

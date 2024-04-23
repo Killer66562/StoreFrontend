@@ -6,7 +6,9 @@ import ImgBar from '../components/ImgBar.vue';
 import { useLoading } from 'vue-loading-overlay';
 import StoreInfo from '../components/StoreInfo.vue';
 import { useItemDetailStore } from '../stores/itemDetailStore';
-import { storeToRefs } from 'pinia';
+import { ApiInstance, baseConfig } from '../api';
+import { useToast } from 'vue-toast-notification';
+
 const isLoading = ref<boolean>();
 const isReady = ref<boolean>();
 const loading = useLoading({
@@ -29,6 +31,18 @@ const fetchData = async () => {
         isLoading.value = false;
     }
 }
+const createBNTitem = async (item_id: number) => {
+    const toast = useToast();
+    const apiInstance = new ApiInstance(baseConfig);
+    try {
+        await apiInstance.post(`/user/buy_next_time_items`, { item_id: item_id });
+        await 
+        toast.success("成功加入願望清單");
+    }
+    catch (err) {
+        toast.error("無法加入願望清單");
+    }
+}
 fetchData();
 </script>
 
@@ -40,13 +54,14 @@ fetchData();
                 <ImgBar :images="itemDetailStore.item?.images" />
             </div>
             <div class="col-12 col-md-9">
-                <h4>{{ item?.name }}</h4>
-                <h3 class="text-danger">${{ itemDetailStore.item?.price }}</h3>
-                <form @submit.prevent="itemDetailStore.addToCart">
+                <h4 class="mb-3">{{ itemDetailStore.item?.name }}</h4>
+                <h3 class="text-danger mb-3">${{ itemDetailStore.item?.price }}</h3>
+                <form @submit.prevent="">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text bg-black text-light">數量</span>
                         <input type="number" class="form-control" min="1" step="1" placeholder="數量" v-model="data.count">
                         <button class="btn btn-danger" type="submit">加入購物車</button>
+                        <button class="btn btn-success" type="button" @click="createBNTitem(itemDetailStore.item?.id)" v-if="itemDetailStore.item">加入願望清單</button>
                     </div>
                 </form>
             </div>
