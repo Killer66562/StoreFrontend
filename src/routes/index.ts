@@ -30,6 +30,10 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/UserStorePageView.vue')
             },
             {
+                path: "orders",
+                component: () => import('../views/UserOrdersPageView.vue')
+            },
+            {
                 path: "create-store",
                 component: () => import('../views/UserCreateStoreView.vue')
             },
@@ -40,6 +44,10 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "cart-items",
                 component: () => import('../views/UserCartItemsView.vue')
+            },
+            {
+                path: "buy-next-time-items",
+                component: () => import('../views/UserBNTItemsPageView.vue')
             }
         ]
     },

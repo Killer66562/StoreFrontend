@@ -8,6 +8,7 @@ import StoreInfo from '../components/StoreInfo.vue';
 import { useItemDetailStore } from '../stores/itemDetailStore';
 import { ApiInstance, baseConfig } from '../api';
 import { useToast } from 'vue-toast-notification';
+import { storeToRefs } from 'pinia';
 
 const isLoading = ref<boolean>();
 const isReady = ref<boolean>();
@@ -36,7 +37,6 @@ const createBNTitem = async (item_id: number) => {
     const apiInstance = new ApiInstance(baseConfig);
     try {
         await apiInstance.post(`/user/buy_next_time_items`, { item_id: item_id });
-        await 
         toast.success("成功加入願望清單");
     }
     catch (err) {
@@ -61,7 +61,7 @@ fetchData();
                         <span class="input-group-text bg-black text-light">數量</span>
                         <input type="number" class="form-control" min="1" step="1" placeholder="數量" v-model="data.count">
                         <button class="btn btn-danger" type="submit">加入購物車</button>
-                        <button class="btn btn-success" type="button" @click="createBNTitem(itemDetailStore.item?.id)" v-if="itemDetailStore.item">加入願望清單</button>
+                        <button class="btn btn-success" type="button" @click="createBNTitem(item?.id as number)" v-if="itemDetailStore.item">加入願望清單</button>
                     </div>
                 </form>
             </div>

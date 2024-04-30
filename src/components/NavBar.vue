@@ -37,7 +37,7 @@ const logout = async () => {
                             </RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink to="/user/records" class="nav-link active text-center">
+                            <RouterLink to="/user/orders" class="nav-link active text-center">
                                 <img class="nav-brand" src="../assets/record.png" alt="訂單一覽" height="24" width="24">
                             </RouterLink>
                         </li>

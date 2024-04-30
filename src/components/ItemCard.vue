@@ -2,22 +2,16 @@
 import { defineProps } from 'vue';
 import { getStaticFile } from '../funcs'
 import type { Item } from '../models';
-import { ApiInstance, baseConfig } from '../api';
-import { useToast } from 'vue-toast-notification';
+import { useBuyNextTimeItemStore } from '../stores/buyNextTimeItemStore';
 defineProps<{
     item: Item
 }>();
-const createBNTitem = async (item_id: number) => {
-    const toast = useToast();
-    const apiInstance = new ApiInstance(baseConfig);
-    try {
-        await apiInstance.post(`/user/buy_next_time_items`, { item_id: item_id });
-        await 
-        toast.success("成功加入願望清單");
-    }
-    catch (err) {
-        toast.error("無法加入願望清單");
-    }
+const buyNextTimeStore = useBuyNextTimeItemStore();
+const findTheBNTItemToRemove = (item_id: number) => {
+    const bntItem = buyNextTimeStore.bntItemsData.find((bntIt) => {
+        return bntIt.item_id == item_id;
+    });
+    return bntItem?.id;
 }
 </script>
 
@@ -38,7 +32,8 @@ const createBNTitem = async (item_id: number) => {
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="d-flex flex-row justify-content-evenly">
-                    <button type="button" class="btn btn-circle" @click="createBNTitem(item.id)">❤️</button>
+                    <button type="button" class="btn btn-circle" @click="buyNextTimeStore.createBNTitem(item.id)" v-if="!buyNextTimeStore.onlyItemIds.includes(item.id)">❤️</button>
+                    <button type="button" class="btn btn-circle bg-danger" v-else @click="buyNextTimeStore.removeBuyNextTimeItem(findTheBNTItemToRemove(item.id) as number)">❤️</button>
                     <button class="btn btn-circle">🛒</button>
                 </div>
             </li>
