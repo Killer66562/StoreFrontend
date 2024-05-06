@@ -8,8 +8,11 @@ defineProps<{
 </script>
 
 <template>
-    <template v-if="item?.images.length === undefined || item?.images.length == 0">
-        <img :src="getStaticFile(item?.icon)" class="d-block w-100" alt="Item" v-if="item?.icon">
+    <template v-if="item === undefined">
+        <img src="../assets/item.jpg" class="d-block w-100" alt="Item">
+    </template>
+    <template v-else-if="item.images.length == 0">
+        <img :src="getStaticFile(item.icon)" class="d-block w-100" alt="Item" v-if="item.icon">
         <img src="../assets/item.jpg" class="d-block w-100" alt="Item" v-else>
     </template>
     <template v-else>

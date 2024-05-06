@@ -1,3 +1,4 @@
+import { Comment } from "./comment"
 import { ItemImage } from "./itemImage"
 import { Store } from "./store"
 
@@ -9,7 +10,8 @@ export interface Item {
     price: number,
     count: number,
     introduction?: string
-    store?: Store
+    store: Store
+    comments: Comment[]
 
     images: ItemImage[]
 }

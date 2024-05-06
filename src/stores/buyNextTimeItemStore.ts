@@ -7,18 +7,20 @@ import { useToast } from "vue-toast-notification";
 export const useBuyNextTimeItemStore = defineStore("buyNextTimeItemStore", () => {
     const bntItemsData = ref<BuyNextTimeItem[]>([]);
     const onlyItemIds = ref<number[]>([]);
-    const createBNTitem = async (item_id: number) => {
-        const toast = useToast();
-        const apiInstance = new ApiInstance(baseConfig);
-        try {
-            await apiInstance.post(`/user/buy_next_time_items`, { item_id: item_id });
-            toast.success("成功加入願望清單");
-        }
-        catch (err) {
-            toast.error("無法加入願望清單");
-        }
-        finally {
-            await fetchBuyNextTimeItemsData();
+    const createBNTitem = async (item_id?: number) => {
+        if (item_id !== undefined) {
+            const toast = useToast();
+            const apiInstance = new ApiInstance(baseConfig);
+            try {
+                await apiInstance.post(`/user/buy_next_time_items`, { item_id: item_id });
+                toast.success("成功加入願望清單");
+            }
+            catch (err) {
+                toast.error("無法加入願望清單");
+            }
+            finally {
+                await fetchBuyNextTimeItemsData();
+            }
         }
     }
     const fetchBuyNextTimeItemsData = async () => {

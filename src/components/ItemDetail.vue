@@ -16,7 +16,7 @@ defineProps<{
             <button class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">店家資訊</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">留言板</button>
+            <button class="nav-link text-dark" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">留言板</button>
         </li>
     </ul>
     <div class="tab-content" style="background-color: antiquewhite;">
@@ -33,7 +33,7 @@ defineProps<{
                 <li>{{ item?.store?.user_id }}</li>
             </ul>
         </div>
-        <CommentBoard id="comments" :comments="[]" />
+        <CommentBoard id="comments"/>
     </div>
 </template>
 
