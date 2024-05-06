@@ -3,6 +3,10 @@ import Navbar from "./components/NavBar.vue";
 import SearchBar from "./components/SearchBar.vue";
 import { RouterView } from "vue-router";
 import { router } from "./routes";
+import { useRootStore } from "./stores/rootStore";
+
+const rootStore = useRootStore();
+rootStore.init();
 </script>
 
 <template>

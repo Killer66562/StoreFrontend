@@ -33,17 +33,27 @@ export const useBuyNextTimeItemStore = defineStore("buyNextTimeItemStore", () =>
     const resetBuyNextTimeItemsData = () => {
         bntItemsData.value  = [];
     }
-    const removeBuyNextTimeItem = async (bntItemId: number) => {
+    const removeBuyNextTimeItem = async (itemId: number) => {
         const apiInstance = new ApiInstance(baseConfig);
-        try {
-            await apiInstance.delete(`/user/buy_next_time_items/${bntItemId}`);
-        }
-        catch (err) {
-            throw err;
-        }
-        finally {
-            await fetchBuyNextTimeItemsData();
+        const bntItem = bntItemsData.value.find((bItem) => {
+            return bItem.item_id == itemId;
+        });
+        if (bntItem) {
+            try {
+                await apiInstance.delete(`/user/buy_next_time_items/${bntItem.id}`);
+            }
+            catch (err) {
+                throw err;
+            }
+            finally {
+                await fetchBuyNextTimeItemsData();
+            }
         }
     }
-    return { bntItemsData, onlyItemIds, fetchBuyNextTimeItemsData, resetBuyNextTimeItemsData, removeBuyNextTimeItem, createBNTitem };
+    const haveBNTitem = (itemId: number) => {
+        return bntItemsData.value.find((bntItem) => {
+            return bntItem.item_id == itemId;
+        }) ? true : false;
+    }
+    return { bntItemsData, onlyItemIds, fetchBuyNextTimeItemsData, resetBuyNextTimeItemsData, removeBuyNextTimeItem, createBNTitem, haveBNTitem };
 });

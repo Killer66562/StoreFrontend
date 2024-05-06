@@ -6,6 +6,7 @@ import { useUserStoreStore } from "./userStoreStore";
 import { useItemsStore } from "./ItemsStore";
 import { useCreateItemStore } from "./createItemStore";
 import { useHomePageStore } from "./homePageStore";
+import { useBuyNextTimeItemStore } from "./buyNextTimeItemStore";
 
 export const useRootStore = defineStore("rootStore", () => {
     const userStore = useUserStore();
@@ -15,6 +16,19 @@ export const useRootStore = defineStore("rootStore", () => {
     const itemsStore = useItemsStore();
     const createItemStore = useCreateItemStore();
     const homePageStore = useHomePageStore();
+    const buyNextTimeItemsStore = useBuyNextTimeItemStore();
+
+    const init = async () => {
+        try {
+            await userStore.fetchUserData();
+            await cartItemStore.fetchCartItems();
+            await buyNextTimeItemsStore.fetchBuyNextTimeItemsData();
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+
     return {
         userStore,
         registerStore,
@@ -22,6 +36,8 @@ export const useRootStore = defineStore("rootStore", () => {
         userStoreStore,
         itemsStore,
         createItemStore,
-        homePageStore
+        homePageStore,
+        buyNextTimeItemsStore,
+        init
     }
 });

@@ -32,6 +32,18 @@ export const useCartItemStore = defineStore("cartItemStore", () => {
         }
         
     }
+    const createCartItem = async (itemId: number, count: number) => {
+        const apiInstance = new ApiInstance(jsonConfig);
+        try {
+            await apiInstance.post("/user/cart_items", { item_id: itemId, count: count });
+        }
+        catch (err) {
+            throw err;
+        }
+        finally {
+            await fetchCartItems();
+        }
+    }
     const sendOrders = async () => {
         try {
             await apiInstance.post("/user/orders/bulk", selectedCartItems.value);
@@ -50,5 +62,6 @@ export const useCartItemStore = defineStore("cartItemStore", () => {
         addCartItem,
         fetchCartItems,
         sendOrders,
+        createCartItem
     }
 });

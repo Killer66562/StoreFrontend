@@ -22,7 +22,7 @@ buyNextTimeItemStore.fetchBuyNextTimeItemsData();
                     <td>{{ BNTItem.item.store?.name }}</td>
                     <td>{{ BNTItem.created_at }}</td>
                     <td>
-                        <button class="btn btn-danger" @click="buyNextTimeItemStore.removeBuyNextTimeItem(BNTItem.id)">從願望清單中移除</button>
+                        <button class="btn btn-danger" @click="buyNextTimeItemStore.removeBuyNextTimeItem(BNTItem.item_id)">從願望清單中移除</button>
                     </td>
                 </tr>
             </tbody>

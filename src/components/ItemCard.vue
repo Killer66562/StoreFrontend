@@ -3,16 +3,12 @@ import { defineProps } from 'vue';
 import { getStaticFile } from '../funcs'
 import type { Item } from '../models';
 import { useBuyNextTimeItemStore } from '../stores/buyNextTimeItemStore';
+import { useCartItemStore } from '../stores/cartItemStore';
 defineProps<{
     item: Item
 }>();
 const buyNextTimeStore = useBuyNextTimeItemStore();
-const findTheBNTItemToRemove = (item_id: number) => {
-    const bntItem = buyNextTimeStore.bntItemsData.find((bntIt) => {
-        return bntIt.item_id == item_id;
-    });
-    return bntItem?.id;
-}
+const cartItemStore = useCartItemStore();
 </script>
 
 <template>
@@ -32,9 +28,9 @@ const findTheBNTItemToRemove = (item_id: number) => {
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="d-flex flex-row justify-content-evenly">
-                    <button type="button" class="btn btn-circle" @click="buyNextTimeStore.createBNTitem(item.id)" v-if="!buyNextTimeStore.onlyItemIds.includes(item.id)">❤️</button>
-                    <button type="button" class="btn btn-circle bg-danger" v-else @click="buyNextTimeStore.removeBuyNextTimeItem(findTheBNTItemToRemove(item.id) as number)">❤️</button>
-                    <button class="btn btn-circle">🛒</button>
+                    <button type="button" class="btn btn-circle" @click="buyNextTimeStore.createBNTitem(item.id)" v-if="!buyNextTimeStore.haveBNTitem(item.id)">❤️</button>
+                    <button type="button" class="btn btn-circle bg-danger" v-else @click="buyNextTimeStore.removeBuyNextTimeItem(item.id)">❤️</button>
+                    <button type="button" class="btn btn-circle" @click="cartItemStore.createCartItem(item.id, 1)">🛒</button>
                 </div>
             </li>
         </ul>
