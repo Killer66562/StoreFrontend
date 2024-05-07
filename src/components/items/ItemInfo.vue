@@ -4,6 +4,7 @@ import ImgBar from '../ImgBar.vue';
 
 import { Item } from '../../models';
 import { CreateCartItem } from '../../models/createCartItem';
+import { useCartItemStore } from '../../stores/cartItemStore';
 import { useBuyNextTimeItemStore } from '../../stores/buyNextTimeItemStore';
 
 defineProps<{
@@ -12,6 +13,7 @@ defineProps<{
 }>();
 
 const buyNextTimeItemStore = useBuyNextTimeItemStore();
+const cartItemStore = useCartItemStore();
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const buyNextTimeItemStore = useBuyNextTimeItemStore();
         <div class="col-12 col-md-9">
             <h4 class="mb-3">{{ item?.name }}</h4>
             <h3 class="text-danger mb-3">${{ item?.price }}</h3>
-            <form @submit.prevent="">
+            <form @submit.prevent="cartItemStore.createCartItem(item?.id, data.count)">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text bg-black text-light">數量</span>
                     <input type="number" class="form-control" min="1" step="1" placeholder="數量" v-model="data.count">

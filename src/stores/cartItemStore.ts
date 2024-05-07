@@ -32,16 +32,18 @@ export const useCartItemStore = defineStore("cartItemStore", () => {
         }
         
     }
-    const createCartItem = async (itemId: number, count: number) => {
-        const apiInstance = new ApiInstance(jsonConfig);
-        try {
-            await apiInstance.post("/user/cart_items", { item_id: itemId, count: count });
-        }
-        catch (err) {
-            throw err;
-        }
-        finally {
-            await fetchCartItems();
+    const createCartItem = async (itemId?: number, count: number = 1) => {
+        if (itemId) {
+            const apiInstance = new ApiInstance(jsonConfig);
+            try {
+                await apiInstance.post("/user/cart_items", { item_id: itemId, count: count });
+            }
+            catch (err) {
+                throw err;
+            }
+            finally {
+                await fetchCartItems();
+            }
         }
     }
     const sendOrders = async () => {
